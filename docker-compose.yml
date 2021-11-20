@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: pg_container_labs
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-root}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+    networks:
+      - nd-net
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-root}" ]
+      interval: 5ss
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+
+  pgadmin:
+    container_name: pgadmin4_container_labs
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-changeme}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - nd-net
+    ports:
+      - "5050:80"
+
+networks:
+  nd-net:
+    driver: bridge
