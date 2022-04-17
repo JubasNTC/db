@@ -1,12 +1,16 @@
-
 import React from 'react';
-import { Routes ,Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
-import { HomePage } from '../pages/HomePage';
+import { DepartmentsPage } from '../pages/DepartmentsPage';
+import { EmployeesPage } from '../pages/EmployeesPage';
+import { ProjectsPage } from '../pages/ProjectsPage';
 
 const Router = () => (
   <Routes>
-    <Route path="/" exact c element={<HomePage/>} />
+    <Route path="/" exact element={<DepartmentsPage />} />
+    <Route path="/employees" exact element={<EmployeesPage />} />
+    <Route path="/projects" exact element={<ProjectsPage />} />
+
     {/* <Route path="/pokemon/:id" component={PokemonPage} /> */}
     {/* <Route component={NotFoundPage} /> */}
   </Routes>

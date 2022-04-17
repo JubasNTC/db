@@ -1,6 +1,6 @@
 'use strict';
 
-const { Model } = require('sequelize');
+const { Model, Sequelize } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Project extends Model {
@@ -44,6 +44,16 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         type: DataTypes.DATE,
       },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: Sequelize.fn('NOW'),
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: Sequelize.fn('NOW'),
+      },
     },
     {
       sequelize,
@@ -54,16 +64,14 @@ module.exports = (sequelize, DataTypes) => {
             this.startDate > this.realEndDate
           ) {
             throw new Error(
-              'The project start date must be less than the completion date',
+              'The project start date must be less than the completion date'
             );
           }
         },
       },
       tableName: 'projects',
       timestamps: true,
-      createdAt: 'createdAt',
-      updatedAt: 'createdAt',
-    },
+    }
   );
 
   return Project;

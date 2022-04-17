@@ -1,3 +1,3 @@
-import { createBrowserHistory } from 'client/src/app/history';
+import { createBrowserHistory } from 'history';
 
 export const history = createBrowserHistory();

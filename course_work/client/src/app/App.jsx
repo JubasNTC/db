@@ -7,8 +7,8 @@ import React from 'react';
 import { Router } from './Router';
 
 const App = () => {
-  // const isLoading = useSelector(({ app: { isLoading } }) => isLoading);
-  // const isError = useSelector(({ app: { isError } }) => isError);
+  // const isLoading = useSelector(({ application: { isLoading } }) => isLoading);
+  // const isError = useSelector(({ application: { isError } }) => isError);
 
   return (
     <>
