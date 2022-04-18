@@ -13,22 +13,35 @@ import {
 const columns = [
   { title: 'ID', field: 'id', editable: 'never' },
   {
-    title: 'Department id',
-    field: 'departmentId',
+    title: 'Department',
+    field: 'Department.name',
   },
   { title: 'Name', field: 'name' },
-  { title: 'Cost', field: 'cost' },
-  { title: 'Start date', field: 'startDate' },
-  { title: 'Planed end date', field: 'planedEndDate' },
-  { title: 'Real end date', field: 'realEndDate' },
+  {
+    title: 'Cost',
+    field: 'cost',
+    type: 'currency',
+    currencySetting: {
+      locale: 'ru',
+      currencyCode: 'rub',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2,
+    },
+  },
+  { title: 'Start date', field: 'startDate', type: 'datetime' },
+  { title: 'Planed end date', field: 'planedEndDate', type: 'datetime' },
+  { title: 'Real end date', field: 'realEndDate', type: 'datetime' },
   {
     title: 'Created at',
     field: 'createdAt',
+    type: 'datetime',
     editable: 'never',
   },
   {
     title: 'Updated at',
     field: 'updatedAt',
+    type: 'datetime',
+    defaultSort: 'desc',
     editable: 'never',
   },
 ];

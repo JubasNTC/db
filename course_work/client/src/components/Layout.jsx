@@ -18,7 +18,15 @@ const Layout = ({ children }) => {
                     <NavLink to={'/employees'}>Employees</NavLink>
                   </Nav.Link>
                   <Nav.Link>
-                    <NavLink to={'/projects'}>Employees</NavLink>
+                    <NavLink to={'/departments-employees'}>
+                      DepartmentsEmployees
+                    </NavLink>
+                  </Nav.Link>
+                  <Nav.Link>
+                    <NavLink to={'/projects'}>Projects</NavLink>
+                  </Nav.Link>
+                  <Nav.Link>
+                    <NavLink to={'/projects-in-work'}>ProjectsInWork</NavLink>
                   </Nav.Link>
                 </Nav>
               </Navbar.Collapse>

@@ -6,11 +6,14 @@ import {
   REMOVE_EMPLOYEE,
   REMOVE_PROJECT,
   SET_DEPARTMENTS,
+  SET_DEPARTMENTS_EMPLOYEES,
   SET_EMPLOYEES,
   SET_ERROR_MESSAGE,
   SET_LOADING,
   SET_PROJECTS,
+  SET_PROJECTS_IN_WORK,
   UPDATE_DEPARTMENT,
+  UPDATE_DEPARTMENT_EMPLOYEE,
   UPDATE_EMPLOYEE,
   UPDATE_PROJECT,
 } from '../actions/app';
@@ -21,6 +24,8 @@ const initialState = {
   departments: [],
   employees: [],
   projects: [],
+  departmentsEmployees: [],
+  projectsInWork: [],
 };
 
 const appReducer = (state = initialState, { type, payload }) => {
@@ -122,6 +127,33 @@ const appReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         projects: state.projects.filter(({ id }) => id !== payload),
+      };
+
+    case SET_DEPARTMENTS_EMPLOYEES:
+      return {
+        ...state,
+        departmentsEmployees: payload,
+      };
+
+    case UPDATE_DEPARTMENT_EMPLOYEE: {
+      const index = state.departmentsEmployees.findIndex(
+        ({ employeeId }) => employeeId === payload.employeeId
+      );
+      const updatedDepartmentsEmployees = Array.from(
+        state.departmentsEmployees
+      );
+      updatedDepartmentsEmployees[index] = payload;
+
+      return {
+        ...state,
+        departmentsEmployees: updatedDepartmentsEmployees,
+      };
+    }
+
+    case SET_PROJECTS_IN_WORK:
+      return {
+        ...state,
+        projectsInWork: payload,
       };
 
     default:

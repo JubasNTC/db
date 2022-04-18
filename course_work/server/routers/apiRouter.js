@@ -5,9 +5,13 @@ const express = require('express');
 const departmentsController = require('controllers/departmentsController');
 const employeesController = require('controllers/employeesController');
 const projectsController = require('controllers/projectsController');
+const departmentsEmployeesController = require('controllers/departmentsEmployeesController');
 const { departmentSchema } = require('validators/departmentsValidator');
 const { employeeSchema } = require('validators/employeeValidator');
 const { projectSchema } = require('../validators/projectValidator');
+const {
+  departmentEmployeeSchema,
+} = require('../validators/departmentEmployeeValidator');
 
 const router = express.Router();
 
@@ -93,6 +97,14 @@ router.get('/projects', async (req, res) => {
   });
 });
 
+router.get('/projects/work', async (req, res) => {
+  const projects = await projectsController.getProjectsInWork();
+
+  res.send({
+    projects,
+  });
+});
+
 router.post('/projects', async (req, res) => {
   const { body } = req;
   const projectData = projectSchema.validateSync(body);
@@ -117,6 +129,26 @@ router.delete('/projects/:id', async (req, res) => {
   } = req;
 
   await projectsController.removeProject(id);
+
+  res.sendStatus(200);
+});
+
+router.get('/departments-employees', async (req, res) => {
+  const departmentsEmployees =
+    await departmentsEmployeesController.getDepartmentsEmployees();
+
+  res.send({
+    departmentsEmployees,
+  });
+});
+
+router.put('/departments-employees', async (req, res) => {
+  const { body } = req;
+  const departmentEmployeeData = departmentEmployeeSchema.validateSync(body);
+
+  await departmentsEmployeesController.updateDepartmentEmployee(
+    departmentEmployeeData
+  );
 
   res.sendStatus(200);
 });

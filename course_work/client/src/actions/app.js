@@ -14,6 +14,9 @@ export const SET_PROJECTS = 'SET_PROJECTS';
 export const CREATE_PROJECT = 'CREATE_PROJECT';
 export const UPDATE_PROJECT = 'UPDATE_PROJECT';
 export const REMOVE_PROJECT = 'REMOVE_PROJECT';
+export const SET_DEPARTMENTS_EMPLOYEES = 'SET_DEPARTMENTS_EMPLOYEES';
+export const UPDATE_DEPARTMENT_EMPLOYEE = 'UPDATE_DEPARTMENT_EMPLOYEE';
+export const SET_PROJECTS_IN_WORK = 'SET_PROJECTS_IN_WORK';
 
 export const setLoading = (isLoading) => ({
   type: SET_LOADING,
@@ -83,6 +86,21 @@ export const updateProject = (project) => ({
 export const removeProject = (id) => ({
   type: REMOVE_PROJECT,
   payload: id,
+});
+
+export const setDepartmentsEmployees = (departmentsEmployees) => ({
+  type: SET_DEPARTMENTS_EMPLOYEES,
+  payload: departmentsEmployees,
+});
+
+export const updateDepartmentEmployee = (departmentEmployee) => ({
+  type: UPDATE_DEPARTMENT_EMPLOYEE,
+  payload: departmentEmployee,
+});
+
+export const setProjectsInWork = (projects) => ({
+  type: SET_PROJECTS_IN_WORK,
+  payload: projects,
 });
 
 export const loadDepartmentsByAPI = async (dispatch) => {
@@ -247,7 +265,15 @@ export const updateProjectByAPI = async (dispatch, id, projectData) => {
   try {
     await axios.put(`/projects/${id}`, projectData);
 
-    dispatch(updateProject(projectData));
+    const newProjectData = {
+      ...projectData,
+      Department: {
+        ...projectData.Department,
+        name: String(projectData.Department.name).toUpperCase(),
+      },
+    };
+
+    dispatch(updateProject(newProjectData));
     dispatch(setErrorMessage(''));
   } catch (e) {
     dispatch(setErrorMessage(e.message));
@@ -263,6 +289,65 @@ export const removeProjectByAPI = async (dispatch, id) => {
     await axios.delete(`/projects/${id}`);
 
     dispatch(removeProject(id));
+    dispatch(setErrorMessage(''));
+  } catch (e) {
+    dispatch(setErrorMessage(e.message));
+  } finally {
+    dispatch(setLoading(false));
+  }
+};
+
+export const loadDepartmentsEmployeesByAPI = async (dispatch) => {
+  dispatch(setLoading(true));
+
+  try {
+    const {
+      data: { departmentsEmployees },
+    } = await axios.get('/departments-employees');
+
+    dispatch(setDepartmentsEmployees(departmentsEmployees));
+    dispatch(setErrorMessage(''));
+  } catch (e) {
+    dispatch(setErrorMessage(e.message));
+  } finally {
+    dispatch(setLoading(false));
+  }
+};
+
+export const updateDepartmentEmployeeByAPI = async (
+  dispatch,
+  departmentsEmployeeData
+) => {
+  dispatch(setLoading(true));
+
+  try {
+    await axios.put('/departments-employees/', departmentsEmployeeData);
+
+    const newDepartmentEmployeeDataData = {
+      ...departmentsEmployeeData,
+      departmentName: String(
+        departmentsEmployeeData.departmentName
+      ).toUpperCase(),
+    };
+
+    dispatch(updateDepartmentEmployee(newDepartmentEmployeeDataData));
+    dispatch(setErrorMessage(''));
+  } catch (e) {
+    dispatch(setErrorMessage(e.message));
+  } finally {
+    dispatch(setLoading(false));
+  }
+};
+
+export const loadProjectsInWorksByAPI = async (dispatch) => {
+  dispatch(setLoading(true));
+
+  try {
+    const {
+      data: { projects },
+    } = await axios.get('/projects/work');
+
+    dispatch(setProjectsInWork(projects));
     dispatch(setErrorMessage(''));
   } catch (e) {
     dispatch(setErrorMessage(e.message));

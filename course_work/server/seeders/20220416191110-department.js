@@ -6,19 +6,16 @@ module.exports = {
       'departments',
       [
         {
-          id: 1,
           name: 'Администрация',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          id: 2,
           name: 'Бухгалтерия',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          id: 3,
           name: 'ИТ',
           createdAt: new Date(),
           updatedAt: new Date(),
