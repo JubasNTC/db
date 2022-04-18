@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DataGrid } from '../components/DataGrid';
 import { Layout } from '../components/Layout';
 import { loadProjectsInWorksByAPI } from '../actions/app';
+import { Alert } from 'react-bootstrap';
 
 const columns = [
   { title: 'ID', field: 'id', editable: 'never' },
@@ -46,12 +47,19 @@ const ProjectsInWorkPage = () => {
   }, [dispatch]);
 
   const isLoading = useSelector(({ app: { isLoading } }) => isLoading);
+  const errorMessage = useSelector(({ app: { errorMessage } }) => errorMessage);
   const projectsInWork = useSelector(
     ({ app: { projectsInWork } }) => projectsInWork
   );
 
   return (
     <Layout>
+      {errorMessage && (
+        <Alert variant="danger">
+          <Alert.Heading>Error</Alert.Heading>
+          <p>{errorMessage}</p>
+        </Alert>
+      )}
       <DataGrid
         title={'ProjectsInWork'}
         columns={columns}

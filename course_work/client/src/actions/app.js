@@ -276,6 +276,7 @@ export const updateProjectByAPI = async (dispatch, id, projectData) => {
     dispatch(updateProject(newProjectData));
     dispatch(setErrorMessage(''));
   } catch (e) {
+    console.dir(e);
     dispatch(setErrorMessage(e.message));
   } finally {
     dispatch(setLoading(false));

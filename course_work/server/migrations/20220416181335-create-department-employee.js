@@ -10,6 +10,7 @@ module.exports = {
       },
       departmentId: {
         allowNull: false,
+        onDelete: 'CASCADE',
         references: {
           model: 'departments',
           key: 'id',
@@ -18,6 +19,7 @@ module.exports = {
       },
       employeeId: {
         allowNull: false,
+        onDelete: 'CASCADE',
         references: {
           model: 'employees',
           key: 'id',

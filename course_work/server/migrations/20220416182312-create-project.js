@@ -12,6 +12,11 @@ module.exports = {
       departmentId: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'departments',
+          key: 'id',
+        },
       },
       name: {
         allowNull: false,

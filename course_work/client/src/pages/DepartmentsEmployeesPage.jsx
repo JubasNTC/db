@@ -7,6 +7,7 @@ import {
   loadDepartmentsEmployeesByAPI,
   updateDepartmentEmployeeByAPI,
 } from '../actions/app';
+import { Alert } from 'react-bootstrap';
 
 const columns = [
   { title: 'Full name', field: 'fullName', editable: 'never' },
@@ -32,12 +33,19 @@ const DepartmentsEmployeesPage = () => {
   }, [dispatch]);
 
   const isLoading = useSelector(({ app: { isLoading } }) => isLoading);
+  const errorMessage = useSelector(({ app: { errorMessage } }) => errorMessage);
   const departmentsEmployees = useSelector(
     ({ app: { departmentsEmployees } }) => departmentsEmployees
   );
 
   return (
     <Layout>
+      {errorMessage && (
+        <Alert variant="danger">
+          <Alert.Heading>Error</Alert.Heading>
+          <p>{errorMessage}</p>
+        </Alert>
+      )}
       <DataGrid
         title={'Departments Employees'}
         columns={columns}

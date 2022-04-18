@@ -9,6 +9,7 @@ import {
   updateDepartmentByAPI,
 } from '../actions/app';
 import { Layout } from '../components/Layout';
+import { Alert } from 'react-bootstrap';
 
 const columns = [
   { title: 'ID', field: 'id', editable: 'never' },
@@ -41,10 +42,17 @@ const DepartmentsPage = () => {
   }, [dispatch]);
 
   const isLoading = useSelector(({ app: { isLoading } }) => isLoading);
+  const errorMessage = useSelector(({ app: { errorMessage } }) => errorMessage);
   const departments = useSelector(({ app: { departments } }) => departments);
 
   return (
     <Layout>
+      {errorMessage && (
+        <Alert variant="danger">
+          <Alert.Heading>Error</Alert.Heading>
+          <p>{errorMessage}</p>
+        </Alert>
+      )}
       <DataGrid
         title={'Departments'}
         columns={columns}

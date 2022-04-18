@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Alert } from 'react-bootstrap';
 
 import { DataGrid } from '../components/DataGrid';
 import { Layout } from '../components/Layout';
@@ -62,10 +63,17 @@ const ProjectsPage = () => {
   }, [dispatch]);
 
   const isLoading = useSelector(({ app: { isLoading } }) => isLoading);
+  const errorMessage = useSelector(({ app: { errorMessage } }) => errorMessage);
   const projects = useSelector(({ app: { projects } }) => projects);
 
   return (
     <Layout>
+      {errorMessage && (
+        <Alert variant="danger">
+          <Alert.Heading>Error</Alert.Heading>
+          <p>{errorMessage}</p>
+        </Alert>
+      )}
       <DataGrid
         title={'Projects'}
         columns={columns}

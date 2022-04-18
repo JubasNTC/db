@@ -9,6 +9,7 @@ import {
   removeEmployeeByAPI,
   updateEmployeeByAPI,
 } from '../actions/app';
+import { Alert } from 'react-bootstrap';
 
 const columns = [
   { title: 'ID', field: 'id', editable: 'never' },
@@ -45,10 +46,17 @@ const EmployeesPage = () => {
   }, [dispatch]);
 
   const isLoading = useSelector(({ app: { isLoading } }) => isLoading);
+  const errorMessage = useSelector(({ app: { errorMessage } }) => errorMessage);
   const employees = useSelector(({ app: { employees } }) => employees);
 
   return (
     <Layout>
+      {errorMessage && (
+        <Alert variant="danger">
+          <Alert.Heading>Error</Alert.Heading>
+          <p>{errorMessage}</p>
+        </Alert>
+      )}
       <DataGrid
         title={'Employees'}
         columns={columns}

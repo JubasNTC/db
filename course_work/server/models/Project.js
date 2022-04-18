@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Project.belongsTo(models.Department, {
         foreignKey: 'departmentId',
+        onDelete: 'CASCADE',
       });
     }
   }

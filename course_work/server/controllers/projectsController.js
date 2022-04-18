@@ -1,7 +1,7 @@
 'use strict';
+const { QueryTypes } = require('sequelize');
 
 const { Project, Department, sequelize } = require('models');
-const { QueryTypes } = require('sequelize');
 
 const getDepartmentIdByName = async (name) => {
   const department = await Department.findOne({
@@ -81,6 +81,10 @@ const updateProject = async (id, projectData) => {
     Department: { name: newDepartmentName },
   } = projectData;
   const newDepartmentId = await getDepartmentIdByName(newDepartmentName);
+
+  if (!newDepartmentId) {
+    throw new Error('Not found department');
+  }
 
   return Project.update(
     {

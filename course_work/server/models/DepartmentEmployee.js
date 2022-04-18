@@ -7,9 +7,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       DepartmentEmployee.belongsTo(models.Department, {
         foreignKey: 'departmentId',
+        onDelete: 'CASCADE',
       });
       DepartmentEmployee.belongsTo(models.Employee, {
         foreignKey: 'employeeId',
+        onDelete: 'CASCADE',
       });
     }
   }
