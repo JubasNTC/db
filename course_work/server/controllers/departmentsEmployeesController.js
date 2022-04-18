@@ -41,6 +41,10 @@ const updateDepartmentEmployee = async (departmentEmployeeData) => {
   const { employeeId, departmentName } = departmentEmployeeData;
   const departmentId = await getDepartmentIdByName(departmentName);
 
+  if (!departmentId) {
+    throw new Error('Not found department');
+  }
+
   const isExisted = await DepartmentEmployee.findOne({ where: { employeeId } });
 
   if (isExisted) {
